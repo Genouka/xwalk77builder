@@ -31,18 +31,24 @@ jobs:
           ./configure.py --bootstrap
           sudo cp ninja /usr/bin/
           sudo apt-get install ninja-build
+          echo #######NINJA ccccc BUILD
           ninja --version
           cd ..
+          echo #######GIT1 ccccc BUILD
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
           export PATH=$cpath/depot_tools:$PATH
           export XWALK_OS_ANDROID=1
+          echo #######GCLIENT ccccc BUILD
           gclient config --name=src/xwalk https://github.com/ks32/crosswalk.git@origin/ks_chromium_77
-          echo "target_os = ['android']">>./.gclient
+          export fiv=$(find -name ".gclient" | sed -n "1p")
+          echo $fiv
+          echo "target_os = ['android']" >>$fiv
           ls -la
           gclient sync
           gn args out/Default_x64
           ninja -k3 -C out/Default_x64 xwalk_core_library || ninja -k3 -C out/Default_x64 xwalk_core_library
           echo okay
+          echo #######TREE ccccc BUILD
           tree >tree.txt
       - name: Archive code coverage results
         uses: actions/upload-artifact@v4
