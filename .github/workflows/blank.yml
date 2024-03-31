@@ -24,7 +24,8 @@ jobs:
       - name: Run a multi-line script
         run: |
           export cpath=$(pwd)
-          sudo apt-get install git re2c cmake clang python tree -y
+          sudo apt update
+          sudo apt-get install git re2c cmake clang python3 tree -y
           git clone http://github.com/ninja-build/ninja
           cd ninja
           ./configure.py --bootstrap
