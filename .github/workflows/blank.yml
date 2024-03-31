@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Build CI v2
 
 # Controls when the workflow will run
 on:
@@ -24,7 +24,14 @@ jobs:
       - name: Run a multi-line script
         run: |
           export cpath=$(pwd)
-          sudo apt-get install git ninja cmake clang tree -y
+          sudo apt-get install git re2c cmake clang python tree -y
+          git clone http://github.com/ninja-build/ninja
+          cd ninja
+          ./configure.py --bootstrap
+          sudo cp ninja /usr/bin/
+          sudo apt-get install ninja-build
+          ninja --version
+          cd ..
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
           export PATH=$cpath/depot_tools:$PATH
           export XWALK_OS_ANDROID=1
